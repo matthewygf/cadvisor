@@ -620,9 +620,13 @@ func (c *containerData) updateStats() error {
 	var nvidiaStatsErr error
 	if c.nvidiaCollector != nil {
 		// This updates the Accelerators field of the stats struct
-		pids := c.handler.ListProcesses(container.ListSelf)
-		klog.V(3).Infof("Going to collect stats from nvidia collector with pids %d", len(pids))
-		nvidiaStatsErr = c.nvidiaCollector.UpdateStats(stats, pids)
+		pids, err := c.handler.ListProcesses(container.ListSelf)
+		if err != nil {
+			nvidiaStatsErr = fmt.Errorf("Error while getting process Ids: %v", err)
+		} else {
+			klog.V(3).Infof("Going to collect stats from nvidia collector with pids %d", len(pids))
+			nvidiaStatsErr = c.nvidiaCollector.UpdateStats(stats, pids)
+		}
 	}
 
 	ref, err := c.handler.ContainerReference()
