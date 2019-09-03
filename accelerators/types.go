@@ -28,5 +28,5 @@ type AcceleratorManager interface {
 }
 
 type AcceleratorCollector interface {
-	UpdateStats(*info.ContainerStats) error
+	UpdateStats(*info.ContainerStats, []int) error
 }

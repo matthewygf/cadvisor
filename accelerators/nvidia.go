@@ -207,7 +207,7 @@ type NvidiaCollector struct {
 }
 
 // UpdateStats updates the stats for NVIDIA GPUs (if any) attached to the container.
-func (nc *NvidiaCollector) UpdateStats(stats *info.ContainerStats, []int pids) error {
+func (nc *NvidiaCollector) UpdateStats(stats *info.ContainerStats, pids []int) error {
 	for _, device := range nc.Devices {
 
 		processUtils, err := device.GetProcessUtilization()
@@ -217,24 +217,24 @@ func (nc *NvidiaCollector) UpdateStats(stats *info.ContainerStats, []int pids) e
 
 		utilSamples := make([]info.AcceleratorProcessStats, len(processUtils))
 		for i, p := range processUtils {
-			for _, pp := range pids{
-				if pp == int(p.PID){
+			for _, pp := range pids {
+				if pp == int(p.PID) {
 					utilSamples[i] = info.AcceleratorProcessStats{
 						PID:     uint(p.PID),
 						MemUtil: uint(p.MemUtil),
 						SMUtil:  uint(p.SmUtil),
-						MemUsed: uint(p.MemUsed),
+						MemUsed: uint64(p.MemUsed),
 					}
 				}
 			}
 		}
 
 		stats.Accelerators = append(stats.Accelerators, info.AcceleratorStats{
-			Make:        "nvidia",
-			Model:       *device.Model,
-			ID:          device.UUID,
-			MemoryTotal: device.Memory,
-			AcceleratorProcessStats: utilSamples
+			Make:                    "nvidia",
+			Model:                   *device.Model,
+			ID:                      device.UUID,
+			MemoryTotal:             *device.Memory,
+			AcceleratorProcessStats: utilSamples,
 		})
 	}
 	return nil

@@ -543,7 +543,7 @@ type FsStats struct {
 
 type AcceleratorProcessStats struct {
 	// PID of the process
-	PID string `json: "pid"`
+	PID uint `json: "pid"`
 
 	// SM utilization of this running process
 	SMUtil uint `json: "sm_util"`
