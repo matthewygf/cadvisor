@@ -17,6 +17,7 @@ package metrics
 import (
 	"fmt"
 	"regexp"
+	"strconv"
 	"time"
 
 	"github.com/matthewygf/cadvisor/container"
@@ -448,7 +449,7 @@ func NewPrometheusCollector(i infoProvider, f ContainerLabelsFunc, includedMetri
 						for _, p := range value.AcceleratorProcessStats {
 							values = append(values, metricValue{
 								value:     float64(p.MemUsed),
-								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								labels:    []string{value.Make, value.Model, value.ID, strconv.FormatUint(uint64(p.PID), 10)},
 								timestamp: s.Timestamp,
 							})
 						}
@@ -470,7 +471,7 @@ func NewPrometheusCollector(i infoProvider, f ContainerLabelsFunc, includedMetri
 						for _, p := range value.AcceleratorProcessStats {
 							values = append(values, metricValue{
 								value:     float64(p.SMUtil),
-								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								labels:    []string{value.Make, value.Model, value.ID, strconv.FormatUint(uint64(p.PID), 10)},
 								timestamp: s.Timestamp,
 							})
 						}
@@ -492,7 +493,7 @@ func NewPrometheusCollector(i infoProvider, f ContainerLabelsFunc, includedMetri
 						for _, p := range value.AcceleratorProcessStats {
 							values = append(values, metricValue{
 								value:     float64(p.MemUtil),
-								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								labels:    []string{value.Make, value.Model, value.ID, strconv.FormatUint(uint64(p.PID), 10)},
 								timestamp: s.Timestamp,
 							})
 						}

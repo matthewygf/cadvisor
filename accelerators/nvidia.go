@@ -103,7 +103,7 @@ var initializeNVML = func(nm *NvidiaManager) {
 			klog.Warningf("Failed to get nvidia device handle %d: %v", i, err)
 			continue
 		}
-		nm.nvidiaDevices[int(*device.MinorNum)] = device
+		nm.nvidiaDevices[int(*device.MinorNum)] = *device
 	}
 }
 
