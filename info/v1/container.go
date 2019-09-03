@@ -541,6 +541,20 @@ type FsStats struct {
 	WeightedIoTime uint64 `json:"weighted_io_time"`
 }
 
+type AcceleratorProcessStats struct {
+	// PID of the process
+	PID string `json: "pid"`
+
+	// SM utilization of this running process
+	SMUtil uint `json: "sm_util"`
+
+	// Memory utilization of this running process
+	MemUtil uint `json: "memory_util"`
+
+	// Memory used by this running process
+	MemUsed uint64 `json: memory_used"`
+}
+
 type AcceleratorStats struct {
 	// Make of the accelerator (nvidia, amd, google etc.)
 	Make string `json:"make"`
@@ -555,13 +569,8 @@ type AcceleratorStats struct {
 	// unit: bytes
 	MemoryTotal uint64 `json:"memory_total"`
 
-	// Total accelerator memory allocated.
-	// unit: bytes
-	MemoryUsed uint64 `json:"memory_used"`
-
-	// Percent of time over the past sample period during which
-	// the accelerator was actively processing.
-	DutyCycle uint64 `json:"duty_cycle"`
+	// Metrics for Accelerators. Each Accelerator corresponds to one element in the array.
+	AcceleratorProcessStats []AcceleratorProcessStats `json:"accelerator_process_stats,omitempty"`
 }
 
 type ProcessStats struct {

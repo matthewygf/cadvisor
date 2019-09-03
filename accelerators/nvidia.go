@@ -22,11 +22,9 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	info "github.com/google/cadvisor/info/v1"
-
-	"github.com/mindprince/gonvml"
+	"github.com/matthewygf/gpu-monitoring-tools/bindings/go/nvml"
 	"k8s.io/klog"
 )
 
@@ -40,7 +38,7 @@ type NvidiaManager struct {
 	nvmlInitialized bool
 
 	// nvidiaDevices is a map from device minor number to a handle that can be used to get metrics about the device
-	nvidiaDevices map[int]gonvml.Device
+	nvidiaDevices map[int]nvml.Device
 }
 
 var sysFsPCIDevicesPath = "/sys/bus/pci/devices/"
@@ -85,39 +83,34 @@ func detectDevices(vendorId string) bool {
 // initializeNVML initializes the NVML library and sets up the nvmlDevices map.
 // This is defined as a variable to help in testing.
 var initializeNVML = func(nm *NvidiaManager) {
-	if err := gonvml.Initialize(); err != nil {
+	if err := nvml.Init(); err != nil {
 		// This is under a logging level because otherwise we may cause
 		// log spam if the drivers/nvml is not installed on the system.
 		klog.V(4).Infof("Could not initialize NVML: %v", err)
 		return
 	}
 	nm.nvmlInitialized = true
-	numDevices, err := gonvml.DeviceCount()
+	numDevices, err := nvml.GetDeviceCount()
 	if err != nil {
 		klog.Warningf("GPU metrics would not be available. Failed to get the number of nvidia devices: %v", err)
 		return
 	}
 	klog.V(1).Infof("NVML initialized. Number of nvidia devices: %v", numDevices)
-	nm.nvidiaDevices = make(map[int]gonvml.Device, numDevices)
+	nm.nvidiaDevices = make(map[int]nvml.Device, numDevices)
 	for i := 0; i < int(numDevices); i++ {
-		device, err := gonvml.DeviceHandleByIndex(uint(i))
+		device, err := nvml.NewDevice(uint(i))
 		if err != nil {
 			klog.Warningf("Failed to get nvidia device handle %d: %v", i, err)
 			continue
 		}
-		minorNumber, err := device.MinorNumber()
-		if err != nil {
-			klog.Warningf("Failed to get nvidia device minor number: %v", err)
-			continue
-		}
-		nm.nvidiaDevices[int(minorNumber)] = device
+		nm.nvidiaDevices[int(*device.MinorNum)] = device
 	}
 }
 
 // Destroy shuts down NVML.
 func (nm *NvidiaManager) Destroy() {
 	if nm.nvmlInitialized {
-		gonvml.Shutdown()
+		nvml.Shutdown()
 	}
 }
 
@@ -210,37 +203,38 @@ var parseDevicesCgroup = func(devicesCgroupPath string) ([]int, error) {
 
 type NvidiaCollector struct {
 	// Exposed for testing
-	Devices []gonvml.Device
+	Devices []nvml.Device
 }
 
 // UpdateStats updates the stats for NVIDIA GPUs (if any) attached to the container.
-func (nc *NvidiaCollector) UpdateStats(stats *info.ContainerStats) error {
+func (nc *NvidiaCollector) UpdateStats(stats *info.ContainerStats, []int pids) error {
 	for _, device := range nc.Devices {
-		model, err := device.Name()
+
+		processUtils, err := device.GetProcessUtilization()
 		if err != nil {
-			return fmt.Errorf("error while getting gpu name: %v", err)
+			return fmt.Errorf("Error while getting process stats: %v", err)
 		}
-		uuid, err := device.UUID()
-		if err != nil {
-			return fmt.Errorf("error while getting gpu uuid: %v", err)
-		}
-		memoryTotal, memoryUsed, err := device.MemoryInfo()
-		if err != nil {
-			return fmt.Errorf("error while getting gpu memory info: %v", err)
-		}
-		//TODO: Use housekeepingInterval
-		utilizationGPU, err := device.AverageGPUUtilization(10 * time.Second)
-		if err != nil {
-			return fmt.Errorf("error while getting gpu utilization: %v", err)
+
+		utilSamples := make([]info.AcceleratorProcessStats, len(processUtils))
+		for i, p := range processUtils {
+			for _, pp := range pids{
+				if pp == int(p.PID){
+					utilSamples[i] = info.AcceleratorProcessStats{
+						PID:     uint(p.PID),
+						MemUtil: uint(p.MemUtil),
+						SMUtil:  uint(p.SmUtil),
+						MemUsed: uint(p.MemUsed),
+					}
+				}
+			}
 		}
 
 		stats.Accelerators = append(stats.Accelerators, info.AcceleratorStats{
 			Make:        "nvidia",
-			Model:       model,
-			ID:          uuid,
-			MemoryTotal: memoryTotal,
-			MemoryUsed:  memoryUsed,
-			DutyCycle:   uint64(utilizationGPU),
+			Model:       *device.Model,
+			ID:          device.UUID,
+			MemoryTotal: device.Memory,
+			AcceleratorProcessStats: utilSamples
 		})
 	}
 	return nil

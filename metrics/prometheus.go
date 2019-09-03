@@ -434,34 +434,68 @@ func NewPrometheusCollector(i infoProvider, f ContainerLabelsFunc, includedMetri
 					return values
 				},
 			}, {
-				name:        "container_accelerator_memory_used_bytes",
-				help:        "Total accelerator memory allocated.",
+				name:        "container_accelerator_PID_memory_used_bytes",
+				help:        "Process in accelerator memory allocated.",
 				valueType:   prometheus.GaugeValue,
-				extraLabels: []string{"make", "model", "acc_id"},
+				extraLabels: []string{"make", "model", "acc_id", "pid"},
 				getValues: func(s *info.ContainerStats) metricValues {
-					values := make(metricValues, 0, len(s.Accelerators))
+					totalValuesCount := len(s.Accelerators)
 					for _, value := range s.Accelerators {
-						values = append(values, metricValue{
-							value:     float64(value.MemoryUsed),
-							labels:    []string{value.Make, value.Model, value.ID},
-							timestamp: s.Timestamp,
-						})
+						totalValuesCount += len(value.AcceleratorProcessStats)
+					}
+					values := make(metricValues, 0, totalValuesCount)
+					for _, value := range s.Accelerators {
+						for _, p := range value.AcceleratorProcessStats {
+							values = append(values, metricValue{
+								value:     float64(p.MemUsed),
+								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								timestamp: s.Timestamp,
+							})
+						}
 					}
 					return values
 				},
 			}, {
-				name:        "container_accelerator_duty_cycle",
-				help:        "Percent of time over the past sample period during which the accelerator was actively processing.",
+				name:        "container_accelerator_sm_utilization",
+				help:        "Process in the past sample period during which the accelerator was actively processing.",
 				valueType:   prometheus.GaugeValue,
-				extraLabels: []string{"make", "model", "acc_id"},
+				extraLabels: []string{"make", "model", "acc_id", "pid"},
 				getValues: func(s *info.ContainerStats) metricValues {
-					values := make(metricValues, 0, len(s.Accelerators))
+					totalValuesCount := len(s.Accelerators)
 					for _, value := range s.Accelerators {
-						values = append(values, metricValue{
-							value:     float64(value.DutyCycle),
-							labels:    []string{value.Make, value.Model, value.ID},
-							timestamp: s.Timestamp,
-						})
+						totalValuesCount += len(value.AcceleratorProcessStats)
+					}
+					values := make(metricValues, 0, totalValuesCount)
+					for _, value := range s.Accelerators {
+						for _, p := range value.AcceleratorProcessStats {
+							values = append(values, metricValue{
+								value:     float64(p.SMUtil),
+								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								timestamp: s.Timestamp,
+							})
+						}
+					}
+					return values
+				},
+			}, {
+				name:        "container_accelerator_mem_utilization",
+				help:        "Process in the past sample period during which the accelerator was actively processing memory kernels.",
+				valueType:   prometheus.GaugeValue,
+				extraLabels: []string{"make", "model", "acc_id", "pid"},
+				getValues: func(s *info.ContainerStats) metricValues {
+					totalValuesCount := len(s.Accelerators)
+					for _, value := range s.Accelerators {
+						totalValuesCount += len(value.AcceleratorProcessStats)
+					}
+					values := make(metricValues, 0, totalValuesCount)
+					for _, value := range s.Accelerators {
+						for _, p := range value.AcceleratorProcessStats {
+							values = append(values, metricValue{
+								value:     float64(p.MemUtil),
+								labels:    []string{value.Make, value.Model, value.ID, p.PID},
+								timestamp: s.Timestamp,
+							})
+						}
 					}
 					return values
 				},

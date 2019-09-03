@@ -34,7 +34,7 @@ import (
 	"github.com/google/cadvisor/collector"
 	"github.com/google/cadvisor/container"
 	info "github.com/google/cadvisor/info/v1"
-	"github.com/google/cadvisor/info/v2"
+	v2 "github.com/google/cadvisor/info/v2"
 	"github.com/google/cadvisor/summary"
 	"github.com/google/cadvisor/utils/cpuload"
 
@@ -620,7 +620,8 @@ func (c *containerData) updateStats() error {
 	var nvidiaStatsErr error
 	if c.nvidiaCollector != nil {
 		// This updates the Accelerators field of the stats struct
-		nvidiaStatsErr = c.nvidiaCollector.UpdateStats(stats)
+		pids := c.handler.ListProcesses(container.ListSelf)
+		nvidiaStatsErr = c.nvidiaCollector.UpdateStats(stats, pids)
 	}
 
 	ref, err := c.handler.ContainerReference()
