@@ -23,9 +23,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/google/cadvisor/container/common"
-	"github.com/google/cadvisor/container/libcontainer"
-	"github.com/google/cadvisor/watcher"
+	"github.com/matthewygf/cadvisor/container/common"
+	"github.com/matthewygf/cadvisor/container/libcontainer"
+	"github.com/matthewygf/cadvisor/watcher"
 	inotify "k8s.io/utils/inotify"
 
 	"k8s.io/klog"

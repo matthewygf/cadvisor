@@ -17,7 +17,7 @@
 package cloudinfo
 
 import (
-	info "github.com/google/cadvisor/info/v1"
+	info "github.com/matthewygf/cadvisor/info/v1"
 	"k8s.io/klog"
 )
 

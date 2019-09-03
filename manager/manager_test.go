@@ -23,20 +23,20 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/cadvisor/cache/memory"
-	"github.com/google/cadvisor/collector"
-	"github.com/google/cadvisor/container"
-	"github.com/google/cadvisor/container/docker"
-	containertest "github.com/google/cadvisor/container/testing"
-	info "github.com/google/cadvisor/info/v1"
-	itest "github.com/google/cadvisor/info/v1/test"
-	"github.com/google/cadvisor/info/v2"
-	"github.com/google/cadvisor/utils/sysfs/fakesysfs"
+	"github.com/matthewygf/cadvisor/cache/memory"
+	"github.com/matthewygf/cadvisor/collector"
+	"github.com/matthewygf/cadvisor/container"
+	"github.com/matthewygf/cadvisor/container/docker"
+	containertest "github.com/matthewygf/cadvisor/container/testing"
+	info "github.com/matthewygf/cadvisor/info/v1"
+	itest "github.com/matthewygf/cadvisor/info/v1/test"
+	"github.com/matthewygf/cadvisor/info/v2"
+	"github.com/matthewygf/cadvisor/utils/sysfs/fakesysfs"
 
 	"github.com/stretchr/testify/assert"
 	clock "k8s.io/utils/clock/testing"
 
-	_ "github.com/google/cadvisor/container/install"
+	_ "github.com/matthewygf/cadvisor/container/install"
 )
 
 // TODO(vmarmol): Refactor these tests.

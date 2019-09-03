@@ -17,7 +17,7 @@ package crio
 import (
 	"testing"
 
-	containerlibcontainer "github.com/google/cadvisor/container/libcontainer"
+	containerlibcontainer "github.com/matthewygf/cadvisor/container/libcontainer"
 	"github.com/stretchr/testify/assert"
 )
 

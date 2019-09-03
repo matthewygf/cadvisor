@@ -25,8 +25,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/google/cadvisor/container"
-	info "github.com/google/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/container"
+	info "github.com/matthewygf/cadvisor/info/v1"
 	"golang.org/x/sys/unix"
 
 	"bytes"

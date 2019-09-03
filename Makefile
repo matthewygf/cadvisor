@@ -23,12 +23,12 @@ test:
 
 test-integration:
 	GO_FLAGS="-race" ./build/build.sh
-	go test -c github.com/google/cadvisor/integration/tests/api
-	go test -c github.com/google/cadvisor/integration/tests/healthz
+	go test -c github.com/matthewygf/cadvisor/integration/tests/api
+	go test -c github.com/matthewygf/cadvisor/integration/tests/healthz
 	@./build/integration.sh
 
 test-runner:
-	@$(GO) build github.com/google/cadvisor/integration/runner
+	@$(GO) build github.com/matthewygf/cadvisor/integration/runner
 
 format:
 	@echo ">> formatting code"

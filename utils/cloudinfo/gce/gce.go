@@ -18,8 +18,8 @@ import (
 	"io/ioutil"
 	"strings"
 
-	info "github.com/google/cadvisor/info/v1"
-	"github.com/google/cadvisor/utils/cloudinfo"
+	info "github.com/matthewygf/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/utils/cloudinfo"
 
 	"cloud.google.com/go/compute/metadata"
 	"k8s.io/klog"

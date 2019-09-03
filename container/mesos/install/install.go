@@ -16,8 +16,8 @@
 package install
 
 import (
-	"github.com/google/cadvisor/container"
-	"github.com/google/cadvisor/container/mesos"
+	"github.com/matthewygf/cadvisor/container"
+	"github.com/matthewygf/cadvisor/container/mesos"
 	"k8s.io/klog"
 )
 

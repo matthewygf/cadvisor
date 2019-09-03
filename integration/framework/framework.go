@@ -23,8 +23,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/cadvisor/client"
-	"github.com/google/cadvisor/client/v2"
+	"github.com/matthewygf/cadvisor/client"
+	"github.com/matthewygf/cadvisor/client/v2"
 	"k8s.io/klog"
 )
 

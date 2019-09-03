@@ -4,7 +4,7 @@ Google internal-only version: [cAdvisor Release Instructions](http://go/cadvisor
 
 ## 1. Send Release PR
 
-Example: https://github.com/google/cadvisor/pull/1281
+Example: https://github.com/matthewygf/cadvisor/pull/1281
 
 Add release notes to [CHANGELOG.md](../../CHANGELOG.md)
 
@@ -23,7 +23,7 @@ $ git fetch upstream && git checkout upstream/master
 # Create the branch
 $ git branch release-v0.XX
 # Push it to upstream
-$ git push git@github.com:google/cadvisor.git release-v0.XX
+$ git push git@github.com:matthewygf/cadvisor.git release-v0.XX
 ```
 
 ### 2.b Tag the release
@@ -36,7 +36,7 @@ $ git fetch upstream && git checkout upstream/release-v0.XX
 # Tag the release commit. If you aren't signing, ommit the -s
 $ git tag -s -a v0.XX.YY
 # Push it to upstream
-$ git push git@github.com:google/cadvisor.git v0.XX.YY
+$ git push git@github.com:matthewygf/cadvisor.git v0.XX.YY
 ```
 
 ## 3. Build release binary
@@ -56,7 +56,7 @@ Docker Hub:
 $ docker login
 Username: ****
 Password: ****
-$ docker push google/cadvisor:$VERSION
+$ docker push matthewygf/cadvisor:$VERSION
 $ docker logout # Good practice with shared account
 ```
 
@@ -76,12 +76,12 @@ $ gcloud auth revoke # Log out of shared account
 
 ## 5. Cut the release
 
-Go to https://github.com/google/cadvisor/releases and click "Draft a new release"
+Go to https://github.com/matthewygf/cadvisor/releases and click "Draft a new release"
 
 - "Tag version" and "Release title" should be preceded by 'v' and then the version. Select the tag pushed in step 2.b
-- Copy an old release as a template (e.g. github.com/google/cadvisor/releases/tag/v0.23.1)
+- Copy an old release as a template (e.g. github.com/matthewygf/cadvisor/releases/tag/v0.23.1)
 - Body should start with release notes (from CHANGELOG.md)
-- Next is the Docker image: `google/cadvisor:$VERSION`
+- Next is the Docker image: `matthewygf/cadvisor:$VERSION`
 - Next are the binary hashes (from step 3)
 - Upload the binary build in step 3
 - If this is an alpha or beta release, mark the release as a "pre-release"
@@ -94,8 +94,8 @@ Once you are satisfied with the release quality (consider waiting a week for bug
 1. Edit the github release a final time, and uncheck the "Pre-release" checkbox
 2. Tag the docker & gcr.io releases with the latest version
 ```
-$ docker pull google/cadvisor:$VERSION
-$ docker tag -f google/cadvisor:$VERSION google/cadvisor:latest
-$ docker tag -f google/cadvisor:$VERSION gcr.io/google_containers/cadvisor:latest
+$ docker pull matthewygf/cadvisor:$VERSION
+$ docker tag -f matthewygf/cadvisor:$VERSION matthewygf/cadvisor:latest
+$ docker tag -f matthewygf/cadvisor:$VERSION gcr.io/google_containers/cadvisor:latest
 ```
 3. Repeat steps 4.a and 4.b to push the image tagged with latest

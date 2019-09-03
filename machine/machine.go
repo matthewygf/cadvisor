@@ -26,10 +26,10 @@ import (
 	// s390/s390x changes
 	"runtime"
 
-	info "github.com/google/cadvisor/info/v1"
-	"github.com/google/cadvisor/utils"
-	"github.com/google/cadvisor/utils/sysfs"
-	"github.com/google/cadvisor/utils/sysinfo"
+	info "github.com/matthewygf/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/utils"
+	"github.com/matthewygf/cadvisor/utils/sysfs"
+	"github.com/matthewygf/cadvisor/utils/sysinfo"
 
 	"k8s.io/klog"
 

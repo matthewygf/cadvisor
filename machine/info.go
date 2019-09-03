@@ -24,11 +24,11 @@ import (
 	"strings"
 
 	"github.com/docker/docker/pkg/parsers/operatingsystem"
-	"github.com/google/cadvisor/fs"
-	info "github.com/google/cadvisor/info/v1"
-	"github.com/google/cadvisor/utils/cloudinfo"
-	"github.com/google/cadvisor/utils/sysfs"
-	"github.com/google/cadvisor/utils/sysinfo"
+	"github.com/matthewygf/cadvisor/fs"
+	info "github.com/matthewygf/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/utils/cloudinfo"
+	"github.com/matthewygf/cadvisor/utils/sysfs"
+	"github.com/matthewygf/cadvisor/utils/sysinfo"
 
 	"k8s.io/klog"
 

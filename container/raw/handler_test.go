@@ -19,8 +19,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/google/cadvisor/fs"
-	info "github.com/google/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/fs"
+	info "github.com/matthewygf/cadvisor/info/v1"
 )
 
 func TestFsToFsStats(t *testing.T) {

@@ -22,9 +22,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/google/cadvisor/container/docker"
-	info "github.com/google/cadvisor/info/v1"
-	"github.com/google/cadvisor/manager"
+	"github.com/matthewygf/cadvisor/container/docker"
+	info "github.com/matthewygf/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/manager"
 
 	"k8s.io/klog"
 )

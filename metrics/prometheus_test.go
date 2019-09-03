@@ -24,8 +24,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/cadvisor/container"
-	info "github.com/google/cadvisor/info/v1"
+	"github.com/matthewygf/cadvisor/container"
+	info "github.com/matthewygf/cadvisor/info/v1"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

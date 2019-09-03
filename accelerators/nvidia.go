@@ -23,7 +23,7 @@ import (
 	"strings"
 	"sync"
 
-	info "github.com/google/cadvisor/info/v1"
+	info "github.com/matthewygf/cadvisor/info/v1"
 	"github.com/matthewygf/gpu-monitoring-tools/bindings/go/nvml"
 	"k8s.io/klog"
 )

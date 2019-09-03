@@ -1,6 +1,6 @@
 # GitHub Issue tracking cAdvisor
 
-This document outlines the process around GitHub issue tracking for cAdvisor at https://github.com/google/cadvisor/issues
+This document outlines the process around GitHub issue tracking for cAdvisor at https://github.com/matthewygf/cadvisor/issues
 
 ## Labels
 

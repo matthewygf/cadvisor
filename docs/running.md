@@ -13,7 +13,7 @@ sudo docker run \
   --publish=8080:8080 \
   --detach=true \
   --name=cadvisor \
-  google/cadvisor:latest
+  matthewygf/cadvisor:latest
 ```
 
 cAdvisor is now running (in the background) on `http://localhost:8080/`. The setup includes directories with Docker state cAdvisor needs to observe.
@@ -28,7 +28,7 @@ otherwise cAdvisor can not connect to docker daemon.
 
 The latest cAdvisor canary release is continuously built from HEAD and available
 as an Automated Build Docker image:
-[google/cadvisor-canary](https://registry.hub.docker.com/u/google/cadvisor-canary/). We do *not* recommend using this image in production due to its large size and volatility.
+[matthewygf/cadvisor-canary](https://registry.hub.docker.com/u/matthewygf/cadvisor-canary/). We do *not* recommend using this image in production due to its large size and volatility.
 
 ## With Boot2Docker
 
@@ -53,7 +53,7 @@ On some versions of RHEL and CentOS the cgroup hierarchies are mounted in `/cgro
 
 ### Debian
 
-By default, Debian disables the memory cgroup which does not allow cAdvisor to gather memory stats. To enable the memory cgroup take a look at [these instructions](https://github.com/google/cadvisor/issues/432).
+By default, Debian disables the memory cgroup which does not allow cAdvisor to gather memory stats. To enable the memory cgroup take a look at [these instructions](https://github.com/matthewygf/cadvisor/issues/432).
 
 ### LXC Docker exec driver
 

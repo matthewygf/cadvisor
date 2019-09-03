@@ -17,9 +17,9 @@ package cpuload
 import (
 	"fmt"
 
-	info "github.com/google/cadvisor/info/v1"
+	info "github.com/matthewygf/cadvisor/info/v1"
 
-	"github.com/google/cadvisor/utils/cpuload/netlink"
+	"github.com/matthewygf/cadvisor/utils/cpuload/netlink"
 	"k8s.io/klog"
 )
 

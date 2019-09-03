@@ -27,20 +27,20 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/google/cadvisor/container"
-	cadvisorhttp "github.com/google/cadvisor/http"
-	"github.com/google/cadvisor/manager"
-	"github.com/google/cadvisor/metrics"
-	"github.com/google/cadvisor/utils/sysfs"
-	"github.com/google/cadvisor/version"
+	"github.com/matthewygf/cadvisor/container"
+	cadvisorhttp "github.com/matthewygf/cadvisor/http"
+	"github.com/matthewygf/cadvisor/manager"
+	"github.com/matthewygf/cadvisor/metrics"
+	"github.com/matthewygf/cadvisor/utils/sysfs"
+	"github.com/matthewygf/cadvisor/version"
 
 	// Register container providers
-	_ "github.com/google/cadvisor/container/install"
+	_ "github.com/matthewygf/cadvisor/container/install"
 
 	// Register CloudProviders
-	_ "github.com/google/cadvisor/utils/cloudinfo/aws"
-	_ "github.com/google/cadvisor/utils/cloudinfo/azure"
-	_ "github.com/google/cadvisor/utils/cloudinfo/gce"
+	_ "github.com/matthewygf/cadvisor/utils/cloudinfo/aws"
+	_ "github.com/matthewygf/cadvisor/utils/cloudinfo/azure"
+	_ "github.com/matthewygf/cadvisor/utils/cloudinfo/gce"
 
 	"k8s.io/klog"
 )

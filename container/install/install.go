@@ -16,10 +16,10 @@
 package install
 
 import (
-	_ "github.com/google/cadvisor/container/containerd/install"
-	_ "github.com/google/cadvisor/container/crio/install"
-	_ "github.com/google/cadvisor/container/docker/install"
-	_ "github.com/google/cadvisor/container/mesos/install"
-	_ "github.com/google/cadvisor/container/rkt/install"
-	_ "github.com/google/cadvisor/container/systemd/install"
+	_ "github.com/matthewygf/cadvisor/container/containerd/install"
+	_ "github.com/matthewygf/cadvisor/container/crio/install"
+	_ "github.com/matthewygf/cadvisor/container/docker/install"
+	_ "github.com/matthewygf/cadvisor/container/mesos/install"
+	_ "github.com/matthewygf/cadvisor/container/rkt/install"
+	_ "github.com/matthewygf/cadvisor/container/systemd/install"
 )

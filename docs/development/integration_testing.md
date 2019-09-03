@@ -9,7 +9,7 @@ This will create a VM, build cadvisor, run integration tests on that VM, retriev
 To simply run the tests against an existing cAdvisor:
 
 ```
-$ go test github.com/google/cadvisor/integration/tests/... -host=HOST -port=PORT
+$ go test github.com/matthewygf/cadvisor/integration/tests/... -host=HOST -port=PORT
 ```
 
 Note that `HOST` and `PORT` default to `localhost` and `8080` respectively.
