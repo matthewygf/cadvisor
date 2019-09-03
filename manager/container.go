@@ -620,7 +620,7 @@ func (c *containerData) updateStats() error {
 	var nvidiaStatsErr error
 	if c.nvidiaCollector != nil {
 		// This updates the Accelerators field of the stats struct
-		pids, err := c.handler.ListProcesses(container.ListSelf)
+		pids, err := c.handler.ListProcesses(container.ListRecursive)
 		if err != nil {
 			nvidiaStatsErr = fmt.Errorf("Error while getting process Ids: %v", err)
 		} else {
